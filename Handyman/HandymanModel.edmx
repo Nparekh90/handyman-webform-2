@@ -1,0 +1,891 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="handymanModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="address">
+          <Key>
+            <PropertyRef Name="address_id" />
+            <PropertyRef Name="owner_id" />
+          </Key>
+          <Property Name="address_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="owner_id" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="street" Type="varchar" MaxLength="50" />
+          <Property Name="city" Type="varchar" MaxLength="20" />
+          <Property Name="province" Type="varchar" MaxLength="2" />
+          <Property Name="postal_code" Type="varchar" MaxLength="6" />
+          <Property Name="used_address" Type="varchar" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="customer">
+          <Key>
+            <PropertyRef Name="customer_id" />
+          </Key>
+          <Property Name="customer_id" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="first_name" Type="varchar" MaxLength="45" />
+          <Property Name="last_name" Type="varchar" MaxLength="45" />
+          <Property Name="phone_num" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="customer_seq">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="handyman">
+          <Key>
+            <PropertyRef Name="handyman_id" />
+          </Key>
+          <Property Name="handyman_id" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="first_name" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="last_name" Type="varchar" MaxLength="45" />
+          <Property Name="phone_num" Type="varchar" MaxLength="10" />
+          <Property Name="work_avaliable_area" Type="double" />
+        </EntityType>
+        <EntityType Name="handyman_ability">
+          <Key>
+            <PropertyRef Name="handyman_ability_id" />
+          </Key>
+          <Property Name="handyman_ability_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="handyman_id" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="ability_skill_id" Type="int" Nullable="false" />
+          <Property Name="skill_license_no" Type="varchar" MaxLength="45" />
+          <Property Name="license_issued_date" Type="datetime" Precision="0" />
+        </EntityType>
+        <EntityType Name="handyman_seq">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6005: The data type 'udecimal' is currently not supported for the target Entity Framework version; the column 'total_cost' in the table 'def.handyman.request' was excluded.-->
+        <EntityType Name="request">
+          <Key>
+            <PropertyRef Name="request_id" />
+          </Key>
+          <Property Name="request_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="customer_id" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="request_date" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="address_id" Type="int" Nullable="false" />
+          <Property Name="request_status" Type="varchar" MaxLength="1" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6005: The data type 'udecimal' is currently not supported for the target Entity Framework version; the column 'cost' in the table 'def.handyman.request_detail' was excluded.-->
+        <EntityType Name="request_detail">
+          <Key>
+            <PropertyRef Name="request_detail_id" />
+            <PropertyRef Name="request_id" />
+          </Key>
+          <Property Name="request_detail_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="request_id" Type="int" Nullable="false" />
+          <Property Name="service_id" Type="int" Nullable="false" />
+          <Property Name="handyman_id" Type="varchar" MaxLength="5" />
+          <Property Name="request_staus_id" Type="int" />
+          <Property Name="expected_work_date" Type="datetime" Precision="0" />
+          <Property Name="fixed_date" Type="datetime" Precision="0" />
+        </EntityType>
+        <EntityType Name="review">
+          <Key>
+            <PropertyRef Name="review_id" />
+          </Key>
+          <Property Name="review_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="customer_id" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="booking_detail_id" Type="int" />
+          <Property Name="rate_handyman" Type="uint" />
+          <Property Name="rate_satisfied" Type="uint" />
+          <Property Name="comment" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="service">
+          <Key>
+            <PropertyRef Name="service_id" />
+          </Key>
+          <Property Name="service_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="service_name" Type="varchar" MaxLength="45" Nullable="false" />
+        </EntityType>
+        <EntityType Name="skill">
+          <Key>
+            <PropertyRef Name="skill_id" />
+          </Key>
+          <Property Name="skill_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="service_id" Type="int" Nullable="false" />
+          <Property Name="skill_name" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="skill_desc" Type="varchar" MaxLength="45" />
+        </EntityType>
+        <EntityType Name="status">
+          <Key>
+            <PropertyRef Name="status_id" />
+          </Key>
+          <Property Name="status_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="45" Nullable="false" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_name" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="user_type" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="user_type">
+          <Key>
+            <PropertyRef Name="type_id" />
+          </Key>
+          <Property Name="type_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <Association Name="customer_id_review_fk">
+          <End Role="customer" Type="Self.customer" Multiplicity="1" />
+          <End Role="review" Type="Self.review" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customer">
+              <PropertyRef Name="customer_id" />
+            </Principal>
+            <Dependent Role="review">
+              <PropertyRef Name="customer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="handyman_id_fk">
+          <End Role="handyman" Type="Self.handyman" Multiplicity="1" />
+          <End Role="handyman_ability" Type="Self.handyman_ability" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="handyman">
+              <PropertyRef Name="handyman_id" />
+            </Principal>
+            <Dependent Role="handyman_ability">
+              <PropertyRef Name="handyman_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="handyman_id_request_detail_fk">
+          <End Role="handyman" Type="Self.handyman" Multiplicity="0..1" />
+          <End Role="request_detail" Type="Self.request_detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="handyman">
+              <PropertyRef Name="handyman_id" />
+            </Principal>
+            <Dependent Role="request_detail">
+              <PropertyRef Name="handyman_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="handyman_skill_id_fk">
+          <End Role="skill" Type="Self.skill" Multiplicity="1" />
+          <End Role="handyman_ability" Type="Self.handyman_ability" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="skill">
+              <PropertyRef Name="skill_id" />
+            </Principal>
+            <Dependent Role="handyman_ability">
+              <PropertyRef Name="ability_skill_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="request_customer_id_fk">
+          <End Role="customer" Type="Self.customer" Multiplicity="1" />
+          <End Role="request" Type="Self.request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customer">
+              <PropertyRef Name="customer_id" />
+            </Principal>
+            <Dependent Role="request">
+              <PropertyRef Name="customer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="request_id_fk">
+          <End Role="request" Type="Self.request" Multiplicity="1" />
+          <End Role="request_detail" Type="Self.request_detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="request">
+              <PropertyRef Name="request_id" />
+            </Principal>
+            <Dependent Role="request_detail">
+              <PropertyRef Name="request_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="request_service_id_fk">
+          <End Role="service" Type="Self.service" Multiplicity="1" />
+          <End Role="request_detail" Type="Self.request_detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="service">
+              <PropertyRef Name="service_id" />
+            </Principal>
+            <Dependent Role="request_detail">
+              <PropertyRef Name="service_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="request_status_id_fk">
+          <End Role="status" Type="Self.status" Multiplicity="0..1" />
+          <End Role="request_detail" Type="Self.request_detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="status">
+              <PropertyRef Name="status_id" />
+            </Principal>
+            <Dependent Role="request_detail">
+              <PropertyRef Name="request_staus_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <!--Errors Found During Generation:
+warning 6035: The relationship 'review_id_fk' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="review_id_fk" />-->
+        <Association Name="skill_service_id_fk">
+          <End Role="service" Type="Self.service" Multiplicity="1" />
+          <End Role="skill" Type="Self.skill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="service">
+              <PropertyRef Name="service_id" />
+            </Principal>
+            <Dependent Role="skill">
+              <PropertyRef Name="service_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="user_id_customer_fk">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="customer" Type="Self.customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="customer">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="user_id_handyman_fk">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="handyman" Type="Self.handyman" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="handyman">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="user_type_fk">
+          <End Role="user_type" Type="Self.user_type" Multiplicity="1" />
+          <End Role="user" Type="Self.user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user_type">
+              <PropertyRef Name="type_id" />
+            </Principal>
+            <Dependent Role="user">
+              <PropertyRef Name="user_type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="handymanModelStoreContainer">
+          <EntitySet Name="address" EntityType="Self.address" Schema="handyman" store:Type="Tables" />
+          <EntitySet Name="customer" EntityType="Self.customer" Schema="handyman" store:Type="Tables" />
+          <EntitySet Name="customer_seq" EntityType="Self.customer_seq" Schema="handyman" store:Type="Tables" />
+          <EntitySet Name="handyman" EntityType="Self.handyman" Schema="handyman" store:Type="Tables" />
+          <EntitySet Name="handyman_ability" EntityType="Self.handyman_ability" Schema="handyman" store:Type="Tables" />
+          <EntitySet Name="handyman_seq" EntityType="Self.handyman_seq" Schema="handyman" store:Type="Tables" />
+          <EntitySet Name="request" EntityType="Self.request" Schema="handyman" store:Type="Tables" />
+          <EntitySet Name="request_detail" EntityType="Self.request_detail" Schema="handyman" store:Type="Tables" />
+          <EntitySet Name="review" EntityType="Self.review" Schema="handyman" store:Type="Tables" />
+          <EntitySet Name="service" EntityType="Self.service" Schema="handyman" store:Type="Tables" />
+          <EntitySet Name="skill" EntityType="Self.skill" Schema="handyman" store:Type="Tables" />
+          <EntitySet Name="status" EntityType="Self.status" Schema="handyman" store:Type="Tables" />
+          <EntitySet Name="user" EntityType="Self.user" Schema="handyman" store:Type="Tables" />
+          <EntitySet Name="user_type" EntityType="Self.user_type" Schema="handyman" store:Type="Tables" />
+          <AssociationSet Name="customer_id_review_fk" Association="Self.customer_id_review_fk">
+            <End Role="customer" EntitySet="customer" />
+            <End Role="review" EntitySet="review" />
+          </AssociationSet>
+          <AssociationSet Name="handyman_id_fk" Association="Self.handyman_id_fk">
+            <End Role="handyman" EntitySet="handyman" />
+            <End Role="handyman_ability" EntitySet="handyman_ability" />
+          </AssociationSet>
+          <AssociationSet Name="handyman_id_request_detail_fk" Association="Self.handyman_id_request_detail_fk">
+            <End Role="handyman" EntitySet="handyman" />
+            <End Role="request_detail" EntitySet="request_detail" />
+          </AssociationSet>
+          <AssociationSet Name="handyman_skill_id_fk" Association="Self.handyman_skill_id_fk">
+            <End Role="skill" EntitySet="skill" />
+            <End Role="handyman_ability" EntitySet="handyman_ability" />
+          </AssociationSet>
+          <AssociationSet Name="request_customer_id_fk" Association="Self.request_customer_id_fk">
+            <End Role="customer" EntitySet="customer" />
+            <End Role="request" EntitySet="request" />
+          </AssociationSet>
+          <AssociationSet Name="request_id_fk" Association="Self.request_id_fk">
+            <End Role="request" EntitySet="request" />
+            <End Role="request_detail" EntitySet="request_detail" />
+          </AssociationSet>
+          <AssociationSet Name="request_service_id_fk" Association="Self.request_service_id_fk">
+            <End Role="service" EntitySet="service" />
+            <End Role="request_detail" EntitySet="request_detail" />
+          </AssociationSet>
+          <AssociationSet Name="request_status_id_fk" Association="Self.request_status_id_fk">
+            <End Role="status" EntitySet="status" />
+            <End Role="request_detail" EntitySet="request_detail" />
+          </AssociationSet>
+          <AssociationSet Name="skill_service_id_fk" Association="Self.skill_service_id_fk">
+            <End Role="service" EntitySet="service" />
+            <End Role="skill" EntitySet="skill" />
+          </AssociationSet>
+          <AssociationSet Name="user_id_customer_fk" Association="Self.user_id_customer_fk">
+            <End Role="user" EntitySet="user" />
+            <End Role="customer" EntitySet="customer" />
+          </AssociationSet>
+          <AssociationSet Name="user_id_handyman_fk" Association="Self.user_id_handyman_fk">
+            <End Role="user" EntitySet="user" />
+            <End Role="handyman" EntitySet="handyman" />
+          </AssociationSet>
+          <AssociationSet Name="user_type_fk" Association="Self.user_type_fk">
+            <End Role="user_type" EntitySet="user_type" />
+            <End Role="user" EntitySet="user" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="handymanModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="address">
+          <Key>
+            <PropertyRef Name="address_id" />
+            <PropertyRef Name="owner_id" />
+          </Key>
+          <Property Name="address_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="owner_id" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="street" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="city" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="province" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="postal_code" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="used_address" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="customer">
+          <Key>
+            <PropertyRef Name="customer_id" />
+          </Key>
+          <Property Name="customer_id" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <Property Name="first_name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="last_name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="phone_num" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="reviews" Relationship="Self.customer_id_review_fk" FromRole="customer" ToRole="review" />
+          <NavigationProperty Name="requests" Relationship="Self.request_customer_id_fk" FromRole="customer" ToRole="request" />
+          <NavigationProperty Name="user" Relationship="Self.user_id_customer_fk" FromRole="customer" ToRole="user" />
+        </EntityType>
+        <EntityType Name="customer_seq">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="handyman">
+          <Key>
+            <PropertyRef Name="handyman_id" />
+          </Key>
+          <Property Name="handyman_id" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <Property Name="first_name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="last_name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="phone_num" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="work_avaliable_area" Type="Double" />
+          <NavigationProperty Name="handyman_ability" Relationship="Self.handyman_id_fk" FromRole="handyman" ToRole="handyman_ability" />
+          <NavigationProperty Name="request_detail" Relationship="Self.handyman_id_request_detail_fk" FromRole="handyman" ToRole="request_detail" />
+          <NavigationProperty Name="user" Relationship="Self.user_id_handyman_fk" FromRole="handyman" ToRole="user" />
+        </EntityType>
+        <EntityType Name="handyman_ability">
+          <Key>
+            <PropertyRef Name="handyman_ability_id" />
+          </Key>
+          <Property Name="handyman_ability_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="handyman_id" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ability_skill_id" Type="Int32" Nullable="false" />
+          <Property Name="skill_license_no" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="license_issued_date" Type="DateTime" />
+          <NavigationProperty Name="handyman" Relationship="Self.handyman_id_fk" FromRole="handyman_ability" ToRole="handyman" />
+          <NavigationProperty Name="skill" Relationship="Self.handyman_skill_id_fk" FromRole="handyman_ability" ToRole="skill" />
+        </EntityType>
+        <EntityType Name="handyman_seq">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="request">
+          <Key>
+            <PropertyRef Name="request_id" />
+          </Key>
+          <Property Name="request_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="customer_id" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="request_date" Type="DateTime" Nullable="false" />
+          <Property Name="address_id" Type="Int32" Nullable="false" />
+          <Property Name="request_status" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="customer" Relationship="Self.request_customer_id_fk" FromRole="request" ToRole="customer" />
+          <NavigationProperty Name="request_detail" Relationship="Self.request_id_fk" FromRole="request" ToRole="request_detail" />
+        </EntityType>
+        <EntityType Name="request_detail">
+          <Key>
+            <PropertyRef Name="request_detail_id" />
+            <PropertyRef Name="request_id" />
+          </Key>
+          <Property Name="request_detail_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="request_id" Type="Int32" Nullable="false" />
+          <Property Name="service_id" Type="Int32" Nullable="false" />
+          <Property Name="handyman_id" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="request_staus_id" Type="Int32" />
+          <Property Name="expected_work_date" Type="DateTime" />
+          <Property Name="fixed_date" Type="DateTime" />
+          <NavigationProperty Name="handyman" Relationship="Self.handyman_id_request_detail_fk" FromRole="request_detail" ToRole="handyman" />
+          <NavigationProperty Name="request" Relationship="Self.request_id_fk" FromRole="request_detail" ToRole="request" />
+          <NavigationProperty Name="service" Relationship="Self.request_service_id_fk" FromRole="request_detail" ToRole="service" />
+          <NavigationProperty Name="status" Relationship="Self.request_status_id_fk" FromRole="request_detail" ToRole="status" />
+        </EntityType>
+        <EntityType Name="review">
+          <Key>
+            <PropertyRef Name="review_id" />
+          </Key>
+          <Property Name="review_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="customer_id" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="booking_detail_id" Type="Int32" />
+          <Property Name="rate_handyman" Type="Int64" />
+          <Property Name="rate_satisfied" Type="Int64" />
+          <Property Name="comment" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="customer" Relationship="Self.customer_id_review_fk" FromRole="review" ToRole="customer" />
+        </EntityType>
+        <EntityType Name="service">
+          <Key>
+            <PropertyRef Name="service_id" />
+          </Key>
+          <Property Name="service_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="service_name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="request_detail" Relationship="Self.request_service_id_fk" FromRole="service" ToRole="request_detail" />
+          <NavigationProperty Name="skills" Relationship="Self.skill_service_id_fk" FromRole="service" ToRole="skill" />
+        </EntityType>
+        <EntityType Name="skill">
+          <Key>
+            <PropertyRef Name="skill_id" />
+          </Key>
+          <Property Name="skill_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="service_id" Type="Int32" Nullable="false" />
+          <Property Name="skill_name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="skill_desc" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="handyman_ability" Relationship="Self.handyman_skill_id_fk" FromRole="skill" ToRole="handyman_ability" />
+          <NavigationProperty Name="service" Relationship="Self.skill_service_id_fk" FromRole="skill" ToRole="service" />
+        </EntityType>
+        <EntityType Name="status">
+          <Key>
+            <PropertyRef Name="status_id" />
+          </Key>
+          <Property Name="status_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="request_detail" Relationship="Self.request_status_id_fk" FromRole="status" ToRole="request_detail" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="user_type" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="customers" Relationship="Self.user_id_customer_fk" FromRole="user" ToRole="customer" />
+          <NavigationProperty Name="handymen" Relationship="Self.user_id_handyman_fk" FromRole="user" ToRole="handyman" />
+          <NavigationProperty Name="user_type1" Relationship="Self.user_type_fk" FromRole="user" ToRole="user_type" />
+        </EntityType>
+        <EntityType Name="user_type">
+          <Key>
+            <PropertyRef Name="type_id" />
+          </Key>
+          <Property Name="type_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="users" Relationship="Self.user_type_fk" FromRole="user_type" ToRole="user" />
+        </EntityType>
+        <Association Name="customer_id_review_fk">
+          <End Role="customer" Type="Self.customer" Multiplicity="1" />
+          <End Role="review" Type="Self.review" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customer">
+              <PropertyRef Name="customer_id" />
+            </Principal>
+            <Dependent Role="review">
+              <PropertyRef Name="customer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="request_customer_id_fk">
+          <End Role="customer" Type="Self.customer" Multiplicity="1" />
+          <End Role="request" Type="Self.request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customer">
+              <PropertyRef Name="customer_id" />
+            </Principal>
+            <Dependent Role="request">
+              <PropertyRef Name="customer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="user_id_customer_fk">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="customer" Type="Self.customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="customer">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="handyman_id_fk">
+          <End Role="handyman" Type="Self.handyman" Multiplicity="1" />
+          <End Role="handyman_ability" Type="Self.handyman_ability" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="handyman">
+              <PropertyRef Name="handyman_id" />
+            </Principal>
+            <Dependent Role="handyman_ability">
+              <PropertyRef Name="handyman_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="handyman_id_request_detail_fk">
+          <End Role="handyman" Type="Self.handyman" Multiplicity="0..1" />
+          <End Role="request_detail" Type="Self.request_detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="handyman">
+              <PropertyRef Name="handyman_id" />
+            </Principal>
+            <Dependent Role="request_detail">
+              <PropertyRef Name="handyman_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="user_id_handyman_fk">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="handyman" Type="Self.handyman" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="handyman">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="handyman_skill_id_fk">
+          <End Role="skill" Type="Self.skill" Multiplicity="1" />
+          <End Role="handyman_ability" Type="Self.handyman_ability" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="skill">
+              <PropertyRef Name="skill_id" />
+            </Principal>
+            <Dependent Role="handyman_ability">
+              <PropertyRef Name="ability_skill_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="request_id_fk">
+          <End Role="request" Type="Self.request" Multiplicity="1" />
+          <End Role="request_detail" Type="Self.request_detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="request">
+              <PropertyRef Name="request_id" />
+            </Principal>
+            <Dependent Role="request_detail">
+              <PropertyRef Name="request_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="request_service_id_fk">
+          <End Role="service" Type="Self.service" Multiplicity="1" />
+          <End Role="request_detail" Type="Self.request_detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="service">
+              <PropertyRef Name="service_id" />
+            </Principal>
+            <Dependent Role="request_detail">
+              <PropertyRef Name="service_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="request_status_id_fk">
+          <End Role="status" Type="Self.status" Multiplicity="0..1" />
+          <End Role="request_detail" Type="Self.request_detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="status">
+              <PropertyRef Name="status_id" />
+            </Principal>
+            <Dependent Role="request_detail">
+              <PropertyRef Name="request_staus_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="skill_service_id_fk">
+          <End Role="service" Type="Self.service" Multiplicity="1" />
+          <End Role="skill" Type="Self.skill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="service">
+              <PropertyRef Name="service_id" />
+            </Principal>
+            <Dependent Role="skill">
+              <PropertyRef Name="service_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="user_type_fk">
+          <End Role="user_type" Type="Self.user_type" Multiplicity="1" />
+          <End Role="user" Type="Self.user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user_type">
+              <PropertyRef Name="type_id" />
+            </Principal>
+            <Dependent Role="user">
+              <PropertyRef Name="user_type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="handymanEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="addresses" EntityType="Self.address" />
+          <EntitySet Name="customers" EntityType="Self.customer" />
+          <EntitySet Name="customer_seq" EntityType="Self.customer_seq" />
+          <EntitySet Name="handymen" EntityType="Self.handyman" />
+          <EntitySet Name="handyman_ability" EntityType="Self.handyman_ability" />
+          <EntitySet Name="handyman_seq" EntityType="Self.handyman_seq" />
+          <EntitySet Name="requests" EntityType="Self.request" />
+          <EntitySet Name="request_detail" EntityType="Self.request_detail" />
+          <EntitySet Name="reviews" EntityType="Self.review" />
+          <EntitySet Name="services" EntityType="Self.service" />
+          <EntitySet Name="skills" EntityType="Self.skill" />
+          <EntitySet Name="status" EntityType="Self.status" />
+          <EntitySet Name="users" EntityType="Self.user" />
+          <EntitySet Name="user_type" EntityType="Self.user_type" />
+          <AssociationSet Name="customer_id_review_fk" Association="Self.customer_id_review_fk">
+            <End Role="customer" EntitySet="customers" />
+            <End Role="review" EntitySet="reviews" />
+          </AssociationSet>
+          <AssociationSet Name="request_customer_id_fk" Association="Self.request_customer_id_fk">
+            <End Role="customer" EntitySet="customers" />
+            <End Role="request" EntitySet="requests" />
+          </AssociationSet>
+          <AssociationSet Name="user_id_customer_fk" Association="Self.user_id_customer_fk">
+            <End Role="user" EntitySet="users" />
+            <End Role="customer" EntitySet="customers" />
+          </AssociationSet>
+          <AssociationSet Name="handyman_id_fk" Association="Self.handyman_id_fk">
+            <End Role="handyman" EntitySet="handymen" />
+            <End Role="handyman_ability" EntitySet="handyman_ability" />
+          </AssociationSet>
+          <AssociationSet Name="handyman_id_request_detail_fk" Association="Self.handyman_id_request_detail_fk">
+            <End Role="handyman" EntitySet="handymen" />
+            <End Role="request_detail" EntitySet="request_detail" />
+          </AssociationSet>
+          <AssociationSet Name="user_id_handyman_fk" Association="Self.user_id_handyman_fk">
+            <End Role="user" EntitySet="users" />
+            <End Role="handyman" EntitySet="handymen" />
+          </AssociationSet>
+          <AssociationSet Name="handyman_skill_id_fk" Association="Self.handyman_skill_id_fk">
+            <End Role="skill" EntitySet="skills" />
+            <End Role="handyman_ability" EntitySet="handyman_ability" />
+          </AssociationSet>
+          <AssociationSet Name="request_id_fk" Association="Self.request_id_fk">
+            <End Role="request" EntitySet="requests" />
+            <End Role="request_detail" EntitySet="request_detail" />
+          </AssociationSet>
+          <AssociationSet Name="request_service_id_fk" Association="Self.request_service_id_fk">
+            <End Role="service" EntitySet="services" />
+            <End Role="request_detail" EntitySet="request_detail" />
+          </AssociationSet>
+          <AssociationSet Name="request_status_id_fk" Association="Self.request_status_id_fk">
+            <End Role="status" EntitySet="status" />
+            <End Role="request_detail" EntitySet="request_detail" />
+          </AssociationSet>
+          <AssociationSet Name="skill_service_id_fk" Association="Self.skill_service_id_fk">
+            <End Role="service" EntitySet="services" />
+            <End Role="skill" EntitySet="skills" />
+          </AssociationSet>
+          <AssociationSet Name="user_type_fk" Association="Self.user_type_fk">
+            <End Role="user_type" EntitySet="user_type" />
+            <End Role="user" EntitySet="users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="handymanModelStoreContainer" CdmEntityContainer="handymanEntities">
+          <EntitySetMapping Name="addresses">
+            <EntityTypeMapping TypeName="handymanModel.address">
+              <MappingFragment StoreEntitySet="address">
+                <ScalarProperty Name="address_id" ColumnName="address_id" />
+                <ScalarProperty Name="owner_id" ColumnName="owner_id" />
+                <ScalarProperty Name="street" ColumnName="street" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="province" ColumnName="province" />
+                <ScalarProperty Name="postal_code" ColumnName="postal_code" />
+                <ScalarProperty Name="used_address" ColumnName="used_address" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="customers">
+            <EntityTypeMapping TypeName="handymanModel.customer">
+              <MappingFragment StoreEntitySet="customer">
+                <ScalarProperty Name="customer_id" ColumnName="customer_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="phone_num" ColumnName="phone_num" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="customer_seq">
+            <EntityTypeMapping TypeName="handymanModel.customer_seq">
+              <MappingFragment StoreEntitySet="customer_seq">
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="handymen">
+            <EntityTypeMapping TypeName="handymanModel.handyman">
+              <MappingFragment StoreEntitySet="handyman">
+                <ScalarProperty Name="handyman_id" ColumnName="handyman_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="phone_num" ColumnName="phone_num" />
+                <ScalarProperty Name="work_avaliable_area" ColumnName="work_avaliable_area" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="handyman_ability">
+            <EntityTypeMapping TypeName="handymanModel.handyman_ability">
+              <MappingFragment StoreEntitySet="handyman_ability">
+                <ScalarProperty Name="handyman_ability_id" ColumnName="handyman_ability_id" />
+                <ScalarProperty Name="handyman_id" ColumnName="handyman_id" />
+                <ScalarProperty Name="ability_skill_id" ColumnName="ability_skill_id" />
+                <ScalarProperty Name="skill_license_no" ColumnName="skill_license_no" />
+                <ScalarProperty Name="license_issued_date" ColumnName="license_issued_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="handyman_seq">
+            <EntityTypeMapping TypeName="handymanModel.handyman_seq">
+              <MappingFragment StoreEntitySet="handyman_seq">
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="requests">
+            <EntityTypeMapping TypeName="handymanModel.request">
+              <MappingFragment StoreEntitySet="request">
+                <ScalarProperty Name="request_id" ColumnName="request_id" />
+                <ScalarProperty Name="customer_id" ColumnName="customer_id" />
+                <ScalarProperty Name="request_date" ColumnName="request_date" />
+                <ScalarProperty Name="address_id" ColumnName="address_id" />
+                <ScalarProperty Name="request_status" ColumnName="request_status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="request_detail">
+            <EntityTypeMapping TypeName="handymanModel.request_detail">
+              <MappingFragment StoreEntitySet="request_detail">
+                <ScalarProperty Name="request_detail_id" ColumnName="request_detail_id" />
+                <ScalarProperty Name="request_id" ColumnName="request_id" />
+                <ScalarProperty Name="service_id" ColumnName="service_id" />
+                <ScalarProperty Name="handyman_id" ColumnName="handyman_id" />
+                <ScalarProperty Name="request_staus_id" ColumnName="request_staus_id" />
+                <ScalarProperty Name="expected_work_date" ColumnName="expected_work_date" />
+                <ScalarProperty Name="fixed_date" ColumnName="fixed_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="reviews">
+            <EntityTypeMapping TypeName="handymanModel.review">
+              <MappingFragment StoreEntitySet="review">
+                <ScalarProperty Name="review_id" ColumnName="review_id" />
+                <ScalarProperty Name="customer_id" ColumnName="customer_id" />
+                <ScalarProperty Name="booking_detail_id" ColumnName="booking_detail_id" />
+                <ScalarProperty Name="rate_handyman" ColumnName="rate_handyman" />
+                <ScalarProperty Name="rate_satisfied" ColumnName="rate_satisfied" />
+                <ScalarProperty Name="comment" ColumnName="comment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="services">
+            <EntityTypeMapping TypeName="handymanModel.service">
+              <MappingFragment StoreEntitySet="service">
+                <ScalarProperty Name="service_id" ColumnName="service_id" />
+                <ScalarProperty Name="service_name" ColumnName="service_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="skills">
+            <EntityTypeMapping TypeName="handymanModel.skill">
+              <MappingFragment StoreEntitySet="skill">
+                <ScalarProperty Name="skill_id" ColumnName="skill_id" />
+                <ScalarProperty Name="service_id" ColumnName="service_id" />
+                <ScalarProperty Name="skill_name" ColumnName="skill_name" />
+                <ScalarProperty Name="skill_desc" ColumnName="skill_desc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="status">
+            <EntityTypeMapping TypeName="handymanModel.status">
+              <MappingFragment StoreEntitySet="status">
+                <ScalarProperty Name="status_id" ColumnName="status_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="handymanModel.user">
+              <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="user_name" ColumnName="user_name" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="user_type" ColumnName="user_type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="user_type">
+            <EntityTypeMapping TypeName="handymanModel.user_type">
+              <MappingFragment StoreEntitySet="user_type">
+                <ScalarProperty Name="type_id" ColumnName="type_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

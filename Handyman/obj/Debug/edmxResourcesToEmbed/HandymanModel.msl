@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="handymanModelStoreContainer" CdmEntityContainer="handymanEntities">
+    <EntitySetMapping Name="addresses">
+      <EntityTypeMapping TypeName="handymanModel.address">
+        <MappingFragment StoreEntitySet="address">
+          <ScalarProperty Name="address_id" ColumnName="address_id" />
+          <ScalarProperty Name="owner_id" ColumnName="owner_id" />
+          <ScalarProperty Name="street" ColumnName="street" />
+          <ScalarProperty Name="city" ColumnName="city" />
+          <ScalarProperty Name="province" ColumnName="province" />
+          <ScalarProperty Name="postal_code" ColumnName="postal_code" />
+          <ScalarProperty Name="used_address" ColumnName="used_address" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="customers">
+      <EntityTypeMapping TypeName="handymanModel.customer">
+        <MappingFragment StoreEntitySet="customer">
+          <ScalarProperty Name="customer_id" ColumnName="customer_id" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="first_name" ColumnName="first_name" />
+          <ScalarProperty Name="last_name" ColumnName="last_name" />
+          <ScalarProperty Name="phone_num" ColumnName="phone_num" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="customer_seq">
+      <EntityTypeMapping TypeName="handymanModel.customer_seq">
+        <MappingFragment StoreEntitySet="customer_seq">
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="handymen">
+      <EntityTypeMapping TypeName="handymanModel.handyman">
+        <MappingFragment StoreEntitySet="handyman">
+          <ScalarProperty Name="handyman_id" ColumnName="handyman_id" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="first_name" ColumnName="first_name" />
+          <ScalarProperty Name="last_name" ColumnName="last_name" />
+          <ScalarProperty Name="phone_num" ColumnName="phone_num" />
+          <ScalarProperty Name="work_avaliable_area" ColumnName="work_avaliable_area" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="handyman_ability">
+      <EntityTypeMapping TypeName="handymanModel.handyman_ability">
+        <MappingFragment StoreEntitySet="handyman_ability">
+          <ScalarProperty Name="handyman_ability_id" ColumnName="handyman_ability_id" />
+          <ScalarProperty Name="handyman_id" ColumnName="handyman_id" />
+          <ScalarProperty Name="ability_skill_id" ColumnName="ability_skill_id" />
+          <ScalarProperty Name="skill_license_no" ColumnName="skill_license_no" />
+          <ScalarProperty Name="license_issued_date" ColumnName="license_issued_date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="handyman_seq">
+      <EntityTypeMapping TypeName="handymanModel.handyman_seq">
+        <MappingFragment StoreEntitySet="handyman_seq">
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="requests">
+      <EntityTypeMapping TypeName="handymanModel.request">
+        <MappingFragment StoreEntitySet="request">
+          <ScalarProperty Name="request_id" ColumnName="request_id" />
+          <ScalarProperty Name="customer_id" ColumnName="customer_id" />
+          <ScalarProperty Name="request_date" ColumnName="request_date" />
+          <ScalarProperty Name="address_id" ColumnName="address_id" />
+          <ScalarProperty Name="request_status" ColumnName="request_status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="request_detail">
+      <EntityTypeMapping TypeName="handymanModel.request_detail">
+        <MappingFragment StoreEntitySet="request_detail">
+          <ScalarProperty Name="request_detail_id" ColumnName="request_detail_id" />
+          <ScalarProperty Name="request_id" ColumnName="request_id" />
+          <ScalarProperty Name="service_id" ColumnName="service_id" />
+          <ScalarProperty Name="handyman_id" ColumnName="handyman_id" />
+          <ScalarProperty Name="request_staus_id" ColumnName="request_staus_id" />
+          <ScalarProperty Name="expected_work_date" ColumnName="expected_work_date" />
+          <ScalarProperty Name="fixed_date" ColumnName="fixed_date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="reviews">
+      <EntityTypeMapping TypeName="handymanModel.review">
+        <MappingFragment StoreEntitySet="review">
+          <ScalarProperty Name="review_id" ColumnName="review_id" />
+          <ScalarProperty Name="customer_id" ColumnName="customer_id" />
+          <ScalarProperty Name="booking_detail_id" ColumnName="booking_detail_id" />
+          <ScalarProperty Name="rate_handyman" ColumnName="rate_handyman" />
+          <ScalarProperty Name="rate_satisfied" ColumnName="rate_satisfied" />
+          <ScalarProperty Name="comment" ColumnName="comment" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="services">
+      <EntityTypeMapping TypeName="handymanModel.service">
+        <MappingFragment StoreEntitySet="service">
+          <ScalarProperty Name="service_id" ColumnName="service_id" />
+          <ScalarProperty Name="service_name" ColumnName="service_name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="skills">
+      <EntityTypeMapping TypeName="handymanModel.skill">
+        <MappingFragment StoreEntitySet="skill">
+          <ScalarProperty Name="skill_id" ColumnName="skill_id" />
+          <ScalarProperty Name="service_id" ColumnName="service_id" />
+          <ScalarProperty Name="skill_name" ColumnName="skill_name" />
+          <ScalarProperty Name="skill_desc" ColumnName="skill_desc" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="status">
+      <EntityTypeMapping TypeName="handymanModel.status">
+        <MappingFragment StoreEntitySet="status">
+          <ScalarProperty Name="status_id" ColumnName="status_id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="users">
+      <EntityTypeMapping TypeName="handymanModel.user">
+        <MappingFragment StoreEntitySet="user">
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="user_name" ColumnName="user_name" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="user_type" ColumnName="user_type" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="user_type">
+      <EntityTypeMapping TypeName="handymanModel.user_type">
+        <MappingFragment StoreEntitySet="user_type">
+          <ScalarProperty Name="type_id" ColumnName="type_id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

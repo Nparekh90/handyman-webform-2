@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="dded069e829a45a0b23e167befe6b8b0" Name="Diagram1">
+        <EntityTypeShape EntityType="handymanModel.address" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="handymanModel.customer" Width="1.5" PointX="1.5" PointY="22.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="handymanModel.customer_seq" Width="1.5" PointX="5.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="handymanModel.handyman" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="handymanModel.handyman_ability" Width="1.5" PointX="5.25" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="handymanModel.handyman_seq" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="handymanModel.request" Width="1.5" PointX="0.75" PointY="18.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="handymanModel.request_detail" Width="1.5" PointX="3" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="handymanModel.review" Width="1.5" PointX="3.75" PointY="22.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="handymanModel.service" Width="1.5" PointX="0.75" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="handymanModel.skill" Width="1.5" PointX="3" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="handymanModel.status" Width="1.5" PointX="0.75" PointY="25.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="handymanModel.user" Width="1.5" PointX="1.5" PointY="11.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="handymanModel.user_type" Width="1.5" PointX="1.5" PointY="15.375" IsExpanded="true" />
+        <AssociationConnector Association="handymanModel.customer_id_review_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="handymanModel.request_customer_id_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="handymanModel.user_id_customer_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="handymanModel.handyman_id_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="handymanModel.handyman_id_request_detail_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="handymanModel.user_id_handyman_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="handymanModel.handyman_skill_id_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="handymanModel.request_id_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="handymanModel.request_service_id_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="handymanModel.request_status_id_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="handymanModel.skill_service_id_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="handymanModel.user_type_fk" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
